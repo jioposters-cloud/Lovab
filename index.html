@@ -1,1 +1,165 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>STATUS RING Posters | E-commerce</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:#f8f8f8;color:#333}header{background:white;padding:1rem 2rem;box-shadow:0 2px 10px rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}.logo{display:flex;align-items:center;gap:0.5rem;font-size:1.5rem;font-weight:bold}.logo-circle{width:40px;height:40px;background:#ff6b35;border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold}nav{display:flex;gap:2rem;align-items:center}nav a{color:#333;text-decoration:none;font-size:0.95rem}nav a:hover{color:#ff6b35}.icons{display:flex;gap:1.5rem;font-size:1.2rem}.cart-badge{position:absolute;top:-8px;right:-8px;background:#ff6b35;color:white;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:0.75rem}.cart-icon{position:relative;cursor:pointer}.hero{background:linear-gradient(135deg,#2a2a2a 0%,#3a3a3a 100%);color:white;padding:4rem 2rem;text-align:left;position:relative}.hero h1{font-size:3.5rem;margin-bottom:1rem;line-height:1.2}.hero .highlight{color:#ff6b35}.hero p{font-size:1.1rem;margin-bottom:2rem;max-width:500px}.hero-buttons{display:flex;gap:1rem}.btn{padding:0.75rem 2rem;border:none;border-radius:0.5rem;font-size:1rem;cursor:pointer;transition:all 0.3s}.btn-primary{background:#ff6b35;color:white}.btn-primary:hover{background:#ff5722}.features{padding:3rem 2rem;background:white}.features{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;padding:3rem 2rem;background:white}.feature{text-align:center}.categories{padding:3rem 2rem}.categories h2{font-size:2rem;margin-bottom:2rem;text-align:center}.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2rem}.product-card{background:white;border:1px solid #ddd;border-radius:0.5rem;padding:1rem;box-shadow:0 2px 8px rgba(0,0,0,0.1)}.product-image{background:#ff6b35;color:white;padding:2rem;text-align:center;font-size:3rem;border-radius:0.3rem;margin-bottom:1rem}.product-info h3{margin-bottom:0.5rem}.price{font-size:1.5rem;color:#ff6b35;font-weight:bold;margin:1rem 0}.product-actions{display:flex;gap:0.5rem}.qty-input{width:60px;padding:0.5rem;border:1px solid #ddd}.add-to-cart{background:#ff6b35;color:white;border:none;padding:0.5rem 1rem;flex:1;cursor:pointer}.cart-modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;justify-content:center;align-items:center}.cart-content{background:white;width:90%;max-width:500px;padding:2rem;border-radius:0.5rem}.cart-item{display:flex;justify-content:space-between;padding:1rem;border-bottom:1px solid #eee}.cart-buttons{display:flex;gap:1rem;margin-top:1rem}.cart-buttons button{flex:1;padding:1rem;border:none;cursor:pointer}.whatsapp-btn{background:#25D366;color:white}.close-btn{background:#ddd}.footer{background:#2a2a2a;color:white;padding:3rem 2rem;text-align:center}</style></head><body><header><div class="logo"><div class="logo-circle">SR</div>STATUS RING</div><nav><a href="#">Shop</a><a href="#">Categories</a></nav><div class="icons"><div class="cart-icon" onclick="toggleCart()">Cart <span class="cart-badge" id="cartCount">0</span></div></div></header><section class="hero"><h1>Premium Medical & Dental <span class="highlight">Education Posters</span></h1><p>Professional quality posters for clinics and educational institutions.</p><button class="btn btn-primary" onclick="document.getElementById('products').scrollIntoView()">Shop Now</button></section><section class="features"><div class="feature"><div style="font-size:2rem">🚚</div><h3>Free Shipping</h3><p>On orders above 999</p></div><div class="feature"><div style="font-size:2rem">⬇️</div><h3>Digital Downloads</h3><p>Instant access</p></div><div class="feature"><div style="font-size:2rem">🛡️</div><h3>Premium Quality</h3><p>Professional prints</p></div></section><section id="products" class="categories"><h2>Featured Products</h2><div class="product-grid" id="productGrid"></div></section><div id="cartModal" class="cart-modal"><div class="cart-content"><h2>Shopping Cart</h2><div id="cartItems"></div><div style="padding:1rem;background:#f0f0f0;margin:1rem 0"><strong>Total: </strong><span id="totalPrice" style="color:#ff6b35;font-size:1.3rem">0</span></div><div class="cart-buttons"><button class="close-btn" onclick="toggleCart()">Close</button><button class="whatsapp-btn" onclick="sendToWhatsApp()">Send to WhatsApp</button></div></div></div><footer class="footer"><p>2025 STATUS RING Posters. All rights reserved.</p></footer><script>const products=[{id:1,name:'Dental Anatomy',price:299},{id:2,name:'Periodontology',price:349},{id:3,name:'Dental Implants',price:399},{id:4,name:'Orthodontics',price:279},{id:5,name:'Skin Anatomy',price:329},{id:6,name:'Medical Guide',price:379},{id:7,name:'Dental Care',price:249},{id:8,name:'Emergency',price:389}];let cart=JSON.parse(localStorage.getItem('cart'))||[];function renderProducts(){document.getElementById('productGrid').innerHTML=products.map(p=>`<div class="product-card"><div class="product-image">📋</div><h3>${p.name}</h3><p>Educational poster</p><div class="price">₹${p.price}</div><div class="product-actions"><input type="number" id="qty-${p.id}" class="qty-input" value="1" min="1"><button class="add-to-cart" onclick="addToCart(${p.id})">Add</button></div></div>`).join('')}function addToCart(id){const qty=parseInt(document.getElementById(`qty-${id}`).value);const product=products.find(p=>p.id===id);const existing=cart.find(i=>i.id===id);if(existing)existing.quantity+=qty;else cart.push({...product,quantity:qty});saveCart();updateUI()}function removeFromCart(id){cart=cart.filter(i=>i.id!==id);saveCart();updateUI()}function saveCart(){localStorage.setItem('cart',JSON.stringify(cart))}function updateUI(){const count=cart.reduce((s,i)=>s+i.quantity,0);document.getElementById('cartCount').textContent=count;document.getElementById('cartItems').innerHTML=cart.map(i=>`<div class="cart-item"><div><strong>${i.name}</strong><br>Qty: ${i.quantity} x ₹${i.price}</div><button onclick="removeFromCart(${i.id})">Remove</button></div>`).join('')||'<p>Empty</p>';const total=cart.reduce((s,i)=>s+i.price*i.quantity,0);document.getElementById('totalPrice').textContent=total}function toggleCart(){document.getElementById('cartModal').style.display=document.getElementById('cartModal').style.display==='none'?'flex':'none'}function sendToWhatsApp(){if(!cart.length){alert('Cart is empty!');return}const msg=`Hi! I want to order:%0A${cart.map(i=>`${i.name} (${i.quantity}x ₹${i.price})`).join('%0A')}%0A%0ATotal: ₹${cart.reduce((s,i)=>s+i.price*i.quantity,0)}`;window.open(`https://wa.me/919876543210?text=${msg}`)}renderProducts()</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STATUS RING Posters - Premium Medical & Dental Education Posters</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{--primary:#FF6B35;--dark:#1a1a1a;--light:#f5f5f5;--text:#333;--success:#25D366}
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#fff;color:var(--text);line-height:1.6}
+        .container{max-width:1200px;margin:0 auto;padding:0 15px}
+        header{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.1);position:sticky;top:0;z-index:1000}
+        .header-top{display:flex;justify-content:space-between;align-items:center;padding:15px 0}
+        .logo{display:flex;align-items:center;gap:10px;font-size:1.8rem;font-weight:bold;color:var(--dark);text-decoration:none}
+        .logo-circle{width:45px;height:45px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:1.2rem}
+        nav{display:flex;gap:2rem;align-items:center}
+        nav a{color:var(--text);text-decoration:none;font-weight:500;transition:color 0.3s}
+        nav a:hover{color:var(--primary)}
+        .header-icons{display:flex;gap:1.5rem;align-items:center;font-size:1.5rem}
+        .cart-icon{position:relative;cursor:pointer}
+        .cart-badge{position:absolute;top:-8px;right:-8px;background:var(--primary);color:white;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:bold}
+        .hero{background:linear-gradient(135deg,var(--dark) 0%,#2a2a2a 100%);color:white;padding:4rem 0;text-align:center;position:relative;overflow:hidden}
+        .hero h1{font-size:3rem;margin-bottom:1rem;line-height:1.2}
+        .hero .highlight{color:var(--primary)}
+        .hero p{font-size:1.1rem;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}
+        .hero-buttons{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+        .btn{padding:0.8rem 2rem;border:none;border-radius:0.5rem;font-size:1rem;cursor:pointer;transition:all 0.3s;text-decoration:none;display:inline-block}
+        .btn-primary{background:var(--primary);color:white;font-weight:bold}
+        .btn-primary:hover{background:#ff5722;transform:translateY(-2px);box-shadow:0 5px 15px rgba(255,107,53,0.3)}
+        .btn-secondary{background:transparent;border:2px solid white;color:white}
+        .btn-secondary:hover{background:rgba(255,255,255,0.1)}
+        .section-title{font-size:2rem;margin:3rem 0 2rem;text-align:center;color:var(--dark)}
+        .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;padding:3rem 0;background:var(--light);margin:3rem 0;border-radius:0.5rem}
+        .feature-card{text-align:center;padding:2rem}
+        .feature-icon{font-size:3rem;margin-bottom:1rem}
+        .categories{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;margin:3rem 0}
+        .category-card{background:white;border:2px solid #ddd;padding:2rem;text-align:center;border-radius:0.5rem;cursor:pointer;transition:all 0.3s}
+        .category-card:hover{border-color:var(--primary);box-shadow:0 5px 15px rgba(0,0,0,0.1)}
+        .category-card.active{border-color:var(--primary);background:#fff5f0}
+        .category-icon{font-size:2.5rem;margin-bottom:1rem}
+        .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:2rem;margin:2rem 0}
+        .product-card{background:white;border:1px solid #ddd;border-radius:0.5rem;overflow:hidden;transition:transform 0.3s,box-shadow 0.3s}
+        .product-card:hover{transform:translateY(-5px);box-shadow:0 10px 25px rgba(0,0,0,0.15)}
+        .product-image{width:100%;height:200px;background:linear-gradient(135deg,var(--primary),#ffb366);display:flex;align-items:center;justify-content:center;font-size:3rem;color:white}
+        .product-info{padding:1.5rem}
+        .product-name{font-size:1.1rem;font-weight:bold;margin-bottom:0.5rem;color:var(--dark)}
+        .product-category{font-size:0.85rem;color:#888;margin-bottom:0.5rem}
+        .product-price{font-size:1.5rem;color:var(--primary);font-weight:bold;margin:1rem 0}
+        .product-size{font-size:0.9rem;color:#666;margin-bottom:0.5rem}
+        .product-actions{display:flex;gap:0.5rem;align-items:center}
+        .qty-select{width:60px;padding:0.5rem;border:1px solid #ddd;border-radius:0.3rem}
+        .add-cart-btn{flex:1;background:var(--primary);color:white;border:none;padding:0.7rem;border-radius:0.3rem;cursor:pointer;font-weight:bold;transition:background 0.3s}
+        .add-cart-btn:hover{background:#ff5722}
+        .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:2000;align-items:center;justify-content:center;padding:20px}
+        .modal.active{display:flex}
+        .modal-content{background:white;width:100%;max-width:600px;border-radius:0.5rem;padding:2rem;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+        .modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;border-bottom:2px solid var(--light);padding-bottom:1rem}
+        .modal-header h2{font-size:1.5rem}
+        .close-btn{background:none;border:none;font-size:2rem;cursor:pointer;color:#999}
+        .cart-item{display:flex;justify-content:space-between;align-items:center;padding:1rem;border-bottom:1px solid #eee;gap:1rem}
+        .cart-item-info{flex:1}
+        .cart-item-name{font-weight:bold;margin-bottom:0.3rem}
+        .cart-item-price{color:var(--primary);font-weight:bold}
+        .cart-item-qty{color:#666;font-size:0.9rem}
+        .remove-btn{background:#ff6b6b;color:white;border:none;padding:0.5rem 1rem;border-radius:0.3rem;cursor:pointer}
+        .cart-summary{background:var(--light);padding:1.5rem;border-radius:0.5rem;margin:1.5rem 0}
+        .summary-row{display:flex;justify-content:space-between;margin-bottom:0.5rem}
+        .summary-row.total{font-size:1.3rem;font-weight:bold;color:var(--primary);border-top:2px solid #ddd;padding-top:1rem}
+        .checkout-form{margin:1.5rem 0}
+        .form-group{margin-bottom:1.5rem}
+        .form-group label{display:block;font-weight:bold;margin-bottom:0.5rem;color:var(--dark)}
+        .form-group input,.form-group textarea,.form-group select{width:100%;padding:0.8rem;border:1px solid #ddd;border-radius:0.3rem;font-size:1rem;font-family:inherit}
+        .form-group textarea{resize:vertical;min-height:80px}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .modal-buttons{display:flex;gap:1rem;margin-top:2rem}
+        .modal-buttons button{flex:1;padding:1rem;border:none;border-radius:0.3rem;font-size:1rem;font-weight:bold;cursor:pointer;transition:all 0.3s}
+        .btn-checkout{background:var(--primary);color:white}
+        .btn-checkout:hover{background:#ff5722}
+        .btn-whatsapp{background:var(--success);color:white}
+        .btn-whatsapp:hover{background:#20ba5a}
+        .btn-cancel{background:#ddd;color:var(--dark)}
+        .btn-cancel:hover{background:#bbb}
+        .pages-section{display:none}
+        .pages-section.active{display:block}
+        .page-content{margin:3rem 0;line-height:1.8}
+        .page-content h2{font-size:1.8rem;margin:1.5rem 0;color:var(--dark)}
+        .page-content h3{font-size:1.3rem;margin:1rem 0;color:var(--primary)}
+        .page-content ul,.page-content ol{margin-left:2rem;margin-bottom:1rem}
+        .page-content li{margin-bottom:0.5rem}
+        footer{background:var(--dark);color:white;padding:3rem 0;margin-top:3rem}
+        .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-bottom:2rem}
+        .footer-section h3{margin-bottom:1rem;color:var(--primary)}
+        .footer-section a{color:#ccc;text-decoration:none;display:block;margin-bottom:0.5rem;transition:color 0.3s}
+        .footer-section a:hover{color:var(--primary)}
+        .footer-bottom{border-top:1px solid #444;padding-top:1.5rem;text-align:center;color:#999}
+        .social-links{display:flex;gap:1rem;font-size:1.3rem}
+        .social-links a{color:white;text-decoration:none}
+        .empty-state{text-align:center;padding:2rem;color:#999}
+        .empty-state-icon{font-size:3rem;margin-bottom:1rem}
+        @media(max-width:768px){
+            nav{display:none}
+            .hero h1{font-size:2rem}
+            .form-row{grid-template-columns:1fr}
+            .header-top{flex-direction:column;gap:1rem}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="#" class="logo" onclick="showHome(event)">
+                    <div class="logo-circle">SR</div>
+                    <span>STATUS RING</span>
+                </a>
+                <nav>
+                    <a href="#" onclick="showHome(event)">Home</a>
+                    <a href="#" onclick="showShop(event)">Shop</a>
+                    <a href="#" onclick="showPage('privacy',event)">Privacy</a>
+                    <a href="#" onclick="showPage('terms',event)">Terms</a>
+                    <a href="#" onclick="showPage('shipping',event)">Shipping</a>
+                    <a href="#" onclick="showPage('returns',event)">Returns</a>
+                </nav>
+                <div class="header-icons">
+                    <a href="#" class="cart-icon" onclick="toggleCart(event)">
+                        🛒
+                        <span class="cart-badge" id="cartCount">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- HOME PAGE -->
+        <div id="homePage" class="pages-section active">
+            <section class="hero">
+                <h1>Premium Medical & Dental <span class="highlight">Education Posters</span></h1>
+                <p>High-quality posters for clinics, hospitals, educational institutions & patient education</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="showShop(event)">Shop Now</button>
+                    <button class="btn btn-secondary" onclick="scrollToCategories()">Browse Categories</button>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Free Shipping</h3>
+                    <p>On orders above ₹500</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Instant Digital Downloads</h3>
+                    <p>Get instant access to digital formats</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Premium Quality</h3>
+                    <p>Professional-grade materials & prints</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Custom Services</h3>
+                    <p>Custom posters
